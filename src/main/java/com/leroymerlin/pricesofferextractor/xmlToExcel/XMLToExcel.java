@@ -91,6 +91,31 @@ public class XMLToExcel {
             cell.setCellValue("LEROY MERLIN - OAP - PRICE_FROM_" + simulationCode);
             cell.setCellStyle(styleTitle);
 
+            //Ajout du logo LM
+            /*HSSFCell cellPicture = row0.createCell(1);
+            String directoryImages = "src/main/resources/static/images/";
+            // Lire l'image à l'aide d'un stream
+            InputStream inputStream = new FileInputStream(directoryImages + "/1200px-Leroy_Merlin.svg.jpeg");
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            //Ajouter l'image au classeur
+            int pictureIdx = wb.addPicture(bytes, Workbook.PICTURE_TYPE_JPEG);
+            //fermer le stream
+            inputStream.close();
+
+            //Gérer l'aspect affichage de l'image
+            CreationHelper helper = wb.getCreationHelper();
+            Drawing drawing = spreadSheet.createDrawingPatriarch();
+            ClientAnchor anchor = helper.createClientAnchor();
+            anchor.setCol1(5);
+            anchor.setRow1(0);
+
+            Picture pict = drawing.createPicture(anchor, pictureIdx);
+            pict.resize();
+
+            // créer une ligne de à l'index 2 dans la feuille Excel
+            Row myRow = null;
+            myRow = spreadSheet.createRow(2);*/
+
             //Entete
             HSSFRow row = spreadSheet.createRow(2);
             String[] head = {"IDENTIFIANT", "DETAIL_PRESTATION", "QUANTITE", "TARIF_UNITAIRE",
