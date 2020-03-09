@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### static ###
+.src/main/resources/static/xls
+.src/main/resources/static/xml
