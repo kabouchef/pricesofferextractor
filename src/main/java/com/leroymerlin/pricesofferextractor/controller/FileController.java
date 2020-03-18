@@ -5,6 +5,8 @@ import com.leroymerlin.pricesofferextractor.authentification.UserAccess;
 import com.leroymerlin.pricesofferextractor.lmfr.SimulationOffer;
 import com.leroymerlin.pricesofferextractor.service.ExportFileService;
 import com.leroymerlin.pricesofferextractor.xmlToExcel.PriceLine;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -17,6 +19,7 @@ import java.io.File;
 import java.util.List;
 
 @Slf4j
+@Api("API pour extraire les tarifs de simulation OAP.")
 @RestController
 @AllArgsConstructor
 public class FileController {
@@ -24,6 +27,7 @@ public class FileController {
     public static final String API_PATH = "/api/v1";
     private final ExportFileService exportFileService;
 
+    @ApiOperation(value = "Récupère la liste des lignes de prix de la simulation en fonction du simulationCode et de l'environnement")
     @CrossOrigin
     @GetMapping(API_PATH + "/request")
     @ResponseBody
@@ -33,6 +37,7 @@ public class FileController {
         return priceListElement;
     }
 
+    @ApiOperation(value = "Récupère les droit d'accès à un LDAP")
     @CrossOrigin
     @GetMapping(API_PATH + "/authentification")
     @ResponseBody
@@ -41,6 +46,7 @@ public class FileController {
         return authentification.getAccessRight(idLDAP);
     }
 
+    @ApiOperation(value = "Récupère le fichier xls de la simulation présoumise par le requête '/request'")
     @GetMapping(API_PATH + "/download")
     public ResponseEntity<Resource> downloadFile(@RequestParam(name = "simulationCode") String simulationCode) {
         File file = new File("src/main/resources/static/xls/PRICE_FROM_" + simulationCode + ".xls");
