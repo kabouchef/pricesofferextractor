@@ -1,9 +1,11 @@
 package com.leroymerlin.pricesofferextractor.xmlToExcel;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.util.IOUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -11,12 +13,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.*;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class XMLToExcel {
     public List<PriceLine> generateExcel(String simulationCode) throws ParserConfigurationException, IOException, SAXException {
         String directory = "src/main/resources/static/xls/";
@@ -88,11 +89,12 @@ public class XMLToExcel {
             // Creating Row of Title
             HSSFRow row0 = spreadSheet.createRow(0);
             HSSFCell cell = row0.createCell(0);
+            row0.setHeight((short) 1400);
             cell.setCellValue("LEROY MERLIN - OAP - PRICE_FROM_" + simulationCode);
             cell.setCellStyle(styleTitle);
 
             //Ajout du logo LM
-            /*HSSFCell cellPicture = row0.createCell(1);
+            HSSFCell cellPicture = row0.createCell(1);
             String directoryImages = "src/main/resources/static/images/";
             // Lire l'image à l'aide d'un stream
             InputStream inputStream = new FileInputStream(directoryImages + "/1200px-Leroy_Merlin.svg.jpeg");
@@ -106,15 +108,16 @@ public class XMLToExcel {
             CreationHelper helper = wb.getCreationHelper();
             Drawing drawing = spreadSheet.createDrawingPatriarch();
             ClientAnchor anchor = helper.createClientAnchor();
-            anchor.setCol1(5);
+            anchor.setCol1(4);
             anchor.setRow1(0);
 
             Picture pict = drawing.createPicture(anchor, pictureIdx);
-            pict.resize();
+            /*pict.resize(0.5);*/
+            pict.getPreferredSize();
 
             // créer une ligne de à l'index 2 dans la feuille Excel
             Row myRow = null;
-            myRow = spreadSheet.createRow(2);*/
+            myRow = spreadSheet.createRow(2);
 
             //Entete
             HSSFRow row = spreadSheet.createRow(2);
@@ -280,6 +283,10 @@ public class XMLToExcel {
             cell.setCellStyle(styleTotalPriceEffected);
             if (tvaReduceAllowed == true || tvaInterAllowed == true) cell.setCellStyle(styleTotalPrice);
 
+            //Hidding column not useful to display
+            for(int i=5; i<20; i++) spreadSheet.setColumnHidden(i, true);
+
+
             /**
              * Outputting to Excel spreadsheet
              */
@@ -287,20 +294,21 @@ public class XMLToExcel {
             wb.write(fos);
             fos.flush();
             fos.close();
-
+            log.info("*******************************");
             File file = new File(directory + "PRICE_FROM_" + simulationCode + ".xls");
             if (file.exists()) {
-                System.out.println("Le fichier Excel a bien été créé.");
+                log.info("Le fichier \"PRICE_FROM_" + simulationCode + ".xls\" a bien été créé.");
             } else {
-                System.out.println("Le fichier Excel n'a pas été créé...");
+                log.info("Le fichier \"PRICE_FROM_" + simulationCode + ".xls\" n'a été créé...");
             }
+            log.info("*******************************");
 
         } catch (IOException e) {
-            System.out.println("IOException " + e.getMessage());
+            log.error("IOException " + e.getMessage());
         } catch (ParserConfigurationException e) {
-            System.out.println("ParserConfigurationException " + e.getMessage());
+            log.error("ParserConfigurationException " + e.getMessage());
         } catch (SAXException e) {
-            System.out.println("SAXException " + e.getMessage());
+            log.error("SAXException " + e.getMessage());
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         } catch (Exception e) {

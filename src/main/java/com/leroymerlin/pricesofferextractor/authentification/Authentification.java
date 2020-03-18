@@ -2,6 +2,7 @@ package com.leroymerlin.pricesofferextractor.authentification;
 
 import com.leroymerlin.pricesofferextractor.lmfr.ConnectionLMFR;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 @Data
+@Slf4j
 public class Authentification {
     private String idLDAP ="";
     private String firstName = "";
@@ -44,13 +46,14 @@ public class Authentification {
         userAccess.setProfil(profil);
         userAccess.setAccessRight(accessRight);
 
-        System.out.println("Login request by : ");
-        System.out.println("LDAP : " + idLDAP);
-        System.out.println("Prénom : " + firstName);
-        System.out.println("Nom : " + lastName);
-        if (accessRight) System.out.println("Login successfully.");
-        else System.out.println("Permission denied.");
-
+        log.info("*******************************");
+        log.info("Login request by : ");
+        log.info("LDAP : " + idLDAP);
+        log.info("Prénom : " + firstName);
+        log.info("Nom : " + lastName);
+        if (accessRight) log.info("Login successfully !");
+        else log.info("Permission denied.");
+        log.info("*******************************");
         return userAccess;
     }
 

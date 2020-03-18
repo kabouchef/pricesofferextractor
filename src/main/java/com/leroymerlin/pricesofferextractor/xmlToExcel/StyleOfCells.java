@@ -5,6 +5,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 
 public class StyleOfCells {
@@ -19,7 +20,7 @@ public class StyleOfCells {
      */
     public HSSFCellStyle getCustomStyleTitle(HSSFWorkbook wb, HSSFSheet spreadSheet){
         HSSFFont font = wb.createFont();
-        spreadSheet.addMergedRegion(new CellRangeAddress(0,0,0,4));
+        spreadSheet.addMergedRegion(new CellRangeAddress(0,0,0,3));
         HSSFCellStyle style = wb.createCellStyle();
         font.setFontName("Leroy Merlin Sans Bold");
         font.setFontHeightInPoints((short) 20);
@@ -29,6 +30,7 @@ public class StyleOfCells {
         style.setBorderLeft(BorderStyle.MEDIUM);
         style.setBorderBottom(BorderStyle.MEDIUM);
         style.setAlignment(HorizontalAlignment.CENTER);
+        style.setVerticalAlignment(VerticalAlignment.CENTER);
         return style;
     }
 

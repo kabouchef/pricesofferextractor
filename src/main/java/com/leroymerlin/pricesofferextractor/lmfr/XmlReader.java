@@ -1,5 +1,6 @@
 package com.leroymerlin.pricesofferextractor.lmfr;
 
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -10,6 +11,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import java.util.logging.Logger;
 
+@Slf4j
 public class XmlReader {
     String offerCode = "";
     String nameDefaultFile = "src/main/resources/static/xml/XML_CONF.xml";
@@ -46,7 +48,9 @@ public class XmlReader {
              * @offerCode : Récupération du numéro de simulation de l'offre
              */
             offerCode = xPath.compile(expression).evaluate(dBuilder.parse(nameDefaultFile), XPathConstants.STRING).toString();
-            System.out.println("Numéro de simulation : " + offerCode);
+            log.info("*******************************");
+            log.info("Numéro de simulation : " + offerCode);
+            log.info("*******************************");
             /*JOptionPane.showMessageDialog(null, "Le fichier XML a bien été créé.", "Succès", JOptionPane.INFORMATION_MESSAGE);
 */
 
