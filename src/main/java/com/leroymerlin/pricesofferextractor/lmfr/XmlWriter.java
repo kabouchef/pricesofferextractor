@@ -1,15 +1,17 @@
 package com.leroymerlin.pricesofferextractor.lmfr;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
+@Slf4j
 public class XmlWriter {
 
-    private String codeOffre = "";
+    private String simulationCode = "";
 
 
     public XmlWriter(String stringToXML) {
@@ -29,10 +31,10 @@ public class XmlWriter {
             fw.close();
 
             XmlReader xmlReader = new XmlReader();
-            codeOffre = xmlReader.XmlReader();
+            simulationCode = xmlReader.XmlReader();
 
             // Get the file
-            String path = directory + codeOffre + ".xml";
+            String path = directory + simulationCode + ".xml";
 
             File ancien = new File(nameDefaultFile);
             File nouveau = new File(path);
@@ -41,8 +43,8 @@ public class XmlWriter {
 
             // Check if the specified file
             // Exists or not
-            if (nouveau.exists()) System.out.println("Le fichier XML a bien été créé.");
-            else System.out.println("Le fichier XML n'a pas été créé...");
+            if (nouveau.exists()) log.info("Le fichier \"" + simulationCode + ".xml\" a bien été créé.");
+            else log.info("Le fichier \"" + simulationCode + ".xml\" n'a été créé...");
 
 
         } catch (IOException e) {
