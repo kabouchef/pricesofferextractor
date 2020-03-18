@@ -31,5 +31,9 @@ build/
 .vscode/
 
 ### static ###
-.src/main/resources/static/xls
-.src/main/resources/static/xml
+.src/main/resources/static/xls/*
+.src/main/resources/static/xml/*
+
+src/main/resources/static/xls/PRICE_FROM_20190415S38248.xls
+
+src/main/resources/static/xml/20190415S38248.xml
