@@ -22,7 +22,10 @@ public class SimulationOffer {
     }
 
     public List<PriceLine> getSimulationOffer(String simulationCode, String environnement, String schema) {
+        
         String staticDir = "src/main/resources/static/";
+        DeleteFile deleteFile = new DeleteFile();
+        deleteFile.DeleteFilesByPath(staticDir);
 
         List<PriceLine> tabPriceElement = null;
         try {
